@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Student Management System</title>
+    <title>Library Management System</title>
     <style>
         #title {text-align: center; font-size: 25px; padding-bottom: 50px}
         ul {text-align: center; font-size: 100px;}
