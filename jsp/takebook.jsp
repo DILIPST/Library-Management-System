@@ -21,7 +21,6 @@
 <html>
 <head>
     <style>
-
         header .header{
             background-color: #fff;
             height: 45px;
@@ -31,7 +30,7 @@
             margin-top: 4px;
         }
         .login-page {
-            width: 360px;
+            width: 100%;
             padding: 8% 0 0;
             margin: auto;
         }
@@ -56,7 +55,7 @@
             background: #FFFFFF;
             max-width: 3000px;
             margin:  0px;
-            padding: 45px;
+            padding: 10px;
             text-align: center;
             box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
             font-family: "Roboto", sans-serif;
@@ -69,6 +68,7 @@
         }
         tr{
             background-color: aliceblue;
+            padding 10px;
         }
         th{
             background-color: darksalmon;
@@ -145,112 +145,75 @@
 <div class="navbar">
     <nav>
         <ul id="MenuItems"><!--use this id in js-->
-            <li><a href="add.jsp">ADD BOOK</a></li>
-            <li><a href="display.jsp">DISPLAY BOOK</a></li>
-            <li><a href="Edit.jsp">EDIT BOOK</a></li>
+            <li><a href="takebook.jsp">TAKE BOOK</a></li>
+            <li><a href="returnbook.jsp">RETURN BOOK</a></li>
+            <li><a href="reservebook.jsp">RESERVE BOOK</a></li>
 
         </ul>
     </nav></div>
 <div class="login-page">
-    <div class="form">
-        <div class="login">
-            <div class="login-header">
+
                 <h3>Details</h3>
-                <p>Please book details</p>
-            </div>
-        </div>
-        <form name="f2" method="post" >
+                <p>Please  Select the book </p>
 
-            <input type="text" name="cutid" placeholder="Title" >
+<table border="1">
+    <tr>
+        <th>Title</th>
+        <th> Author Name</th>
+        <th>Subject</th>
+        <th>Publication Date</th>
+        <th>Take</th>
+        <th>Count</th>
 
+    </tr>
+    <jsp:useBean id="obj" class="com.example.librarym.bookBean"/>
+    <jsp:setProperty property="*" name="obj" />
+    <%
+        String a=obj.getCutid();
+        String au=obj.getAuthor();
+        String su= obj.getSubject();
+        String date=obj.getPdate();
+        String sql="select*from books where count between 1 and 5";
 
-            <input type="text"  name="author" placeholder="Author" >
+        try{
+            connection = DriverManager.getConnection(connectionUrl, userid, password);
+            statement=connection.createStatement();
+            out.print(".");
+            resultSet = statement.executeQuery(sql);
 
+            while(resultSet.next()){
+    %>
+    <tr>
+        <td><%=resultSet.getString("title") %></td>
+        <td><%=resultSet.getString("author") %></td>
+        <td><%=resultSet.getString("subject") %></td>
+        <td><%=resultSet.getString("pdate") %></td>
+        <td><a href="booksadd.jsp?id=<%=resultSet.getString("title")%>"><button type="button" onclick="myFunction()" >Take</button></a></td>
+        <td><%=resultSet.getInt("count")%></td>
+    </tr>
+    <%
+            }
+            connection.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        String  status= String.valueOf(session.getAttribute("Status"));
 
-            <input type="text" name="subject" placeholder="Subject">
+    %>
+    <script>
+       function myFunction()
+        {
+            var status =<%=status%>;
+            if (status != 0)
+                status = "Taken book Successfully";
+            else {
+                status = "Your limit is Over";
+            }
+            alert(status);
+        }
+    </script>
 
-
-            <input type="date" name="pdate" placeholder="Date">
-            <button type="Submit" name="submit1" >Search</button>
-        </form>
-    </div>
+</table>
 </div>
-            <table border="1">
-                <tr>
-                    <th>Title</th>
-                    <th> Author Name</th>
-                    <th>Subject</th>
-                    <th>Publication Date</th>
-                    <th>Delete</th>
-                    <th>Number</th>
-                </tr>
-                <jsp:useBean id="obj" class="com.example.librarym.bookBean"/>
-                <jsp:setProperty property="*" name="obj" />
-                <%
-                     String a=obj.getCutid();
-                     String au=obj.getAuthor();
-                     String su= obj.getSubject();
-                     String date=obj.getPdate();
-                    boolean added = false;
-                    boolean whe=true;
-                    String sql="select*from books";
-                   if(a!=null)
-                   {
-                       if(whe) sql+=" where ";
-                       sql += " title='"+a+"' ";
-                       added = true;
-                       whe=false;
-                   }
-                    if(au!=null)
-                    {
-                        if(whe) sql+=" where ";
-                        if (added) sql +="and";
-                        sql += " author='"+au+"'";
-                        added = true;
-                        whe=false;
-                    }
-                    if(su!=null)
-                    {
-                        if(whe) sql+=" where ";
-                        if (added) sql +="and";
-                        sql += " subject='"+su+"'";
-                        added = true;
-                        whe=false;
-                    }
-                    if(date!=null)
-                    {
-                        if(whe) sql+=" where ";
-                        if (added) sql +="and";
-                        sql += " pdate= '"+date+"'";
-                        added = true;
-                        whe=false;
-                    }
-                    try{
-                        int i=1;
-                        connection = DriverManager.getConnection(connectionUrl, userid, password);
-                        statement=connection.createStatement();
-                           out.print(".");
-                        resultSet = statement.executeQuery(sql);
-
-                        while(resultSet.next()){
-                %>
-                <tr>
-                    <td><%=resultSet.getString("title") %></td>
-                    <td><%=resultSet.getString("author") %></td>
-                    <td><%=resultSet.getString("subject") %></td>
-                    <td><%=resultSet.getString("pdate") %></td>
-                    <td><a href="delete.jsp?id=<%=resultSet.getInt("id")%>"><button type="button"  class="delete">Delete</button></a></td>
-                    <td><%=i++%></td>
-                </tr>
-                <%
-                        }
-                        connection.close();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                %>
-
-            </table>
-        </div>
 </body>
 </html>

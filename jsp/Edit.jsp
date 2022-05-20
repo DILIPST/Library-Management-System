@@ -92,6 +92,9 @@
             flex: 1;
             text-align: right;
         }
+        a{
+            color: white;
+        }
     </style>
 </head>
 <body>
@@ -126,10 +129,15 @@
 
 
             <input type="date" name="pdate" placeholder="Date">
-            <button type="Submit" name="submit1" >Edit</button>
+            <button type="Submit" name="submit1" onclick="myFunction()">Edit</button>
         </form>
     </div>
 </div>
+<script>
+    function myFunction() {
+        alert("Data Updated Sucessfully");
+    }
+</script>
 </body>
 </body>
 </html>

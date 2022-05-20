@@ -5,7 +5,7 @@
 <%String un=String.valueOf(session.getAttribute("Name"));
 %>
 <head>
-    <title>Student Management System</title>
+    <title>Library Management System</title>
     <style>
         #title {text-align: center; font-size: 25px; padding-bottom: 50px}
         ul {text-align: center; font-size: 100px;}
@@ -60,16 +60,21 @@
             box-sizing: border-box;
             font-size: 14px;
         }
+        img {
+            width: 1510px;
+            height: 495px;
+            border: 7px #FF416C;
+        }
 
     </style>
 </head>
 <body>
 <h3><p >LIBRARY MANAGEMENT SYSTEM<p></h3>
 <div class="su">
-    <a href="memberpage.jsp"><button type="button" >MEMBERS</button></a>
-
+    <a href="Myprofile.jsp?id=<%=un%>"><button type="button" >My Profile</button></a>
     <a href="takebook.jsp?id=<%=un%>"><button type="button" >Take Book</button></a>
     <a href="reservebook.jsp?id=<%=un%>"><button type="button" >ReserveBook</button></a>
+    <a href="returnbook.jsp"><button type="button" >Return Book</button></a>
 
 </div>
 <div class="mm">
@@ -77,27 +82,18 @@
 
     <%
         String namer=String.valueOf(session.getAttribute("Name"));
+        out.print(namer);
         String  a= bookDAO.reservedbooks(namer);
         if(a!=null)
         {
             String book=bookDAO.availbooks(a);
             if(book!=null)
             {
-                out.print(book+"You reserved is available to take now!!");
+                out.print(book+" !! This book is available for You to take");
             }
         }
     %>
-    <table>
-        <tr>
-            <td><a href="add.jsp"><img src="Images/add.png" alt=""  /></></td>
-            <td><a href="display.jsp"><img src="Images/download.jpg" alt="" /></a></td>
-        </tr>
-        <tr>
-            <td>  <a href="Edit.jsp"><img src="Images/istockphoto-1222550815-170667a.jpg" alt="" /></a></td>
-            <td><a href="Login.jsp"><img src="Images/images.png" alt="" /></a></td>
-        </tr>
-
-    </table>
-</div>
+    </div>
+<img src="Images/home2.jpg">
 </body>
 </html>

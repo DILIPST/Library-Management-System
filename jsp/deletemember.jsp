@@ -1,12 +1,15 @@
 <%@ page import="com.example.librarym.bookDAO" %>
+
+<html>
 <head>
-    <title>Title</title>
+    <title>Delete Member</title>
 </head>
 <body>
 <%@page import="java.sql.*,java.util.*"%>
 
 <%
-   int  id= Integer.valueOf(request.getParameter("id"));
+   // int  id= Integer.valueOf(request.getParameter("id"));
+    String id=request.getParameter("id");
     try
     {
         Class.forName("org.postgresql.Driver");
@@ -15,8 +18,8 @@
         String connURL="jdbc:postgresql://localhost:5432/postgres";
         Connection conn = DriverManager.getConnection(connURL,username,pwd);
         Statement st=conn.createStatement();
-        String sql="DELETE FROM books WHERE id="+id;
-
+        String sql="DELETE FROM members WHERE name='"+id+"'";
+        System.out.println(sql);
 
         int i=st.executeUpdate(sql);
 
@@ -26,7 +29,7 @@
         System.out.print(e);
         e.printStackTrace();
     }
-    response.sendRedirect("data.jsp");
+    response.sendRedirect("memberpage.jsp");
 %>
 </body>
 </html>

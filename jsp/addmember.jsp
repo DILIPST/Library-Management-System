@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Deletion </title>
+    <title>SignUp </title>
     <style>
         header .header{
             background-color: #fff;
@@ -10,9 +10,6 @@
         header a img{
             width: 134px;
             margin-top: 4px;
-        }
-        a{
-            color: white;
         }
         .login-page {
             width: 360px;
@@ -68,11 +65,18 @@
             color: #FF416C;
             text-decoration: none;
         }
+
+
+        body {
+            background-color:#FF416C;
+            background-image: linear-gradient(to right, #FF4B2B, #FF416C);
+            font-family: "Roboto", sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
         nav ul{
             display: inline-block;
             list-style-type: none;
-
-            color: #eeeeee;
         }
         nav ul li{
             display: inline-block;
@@ -87,14 +91,9 @@
         nav{
             flex: 1;
             text-align: right;
-            color: #eeeeee;
         }
-        body {
-            background-color:#FF416C;
-            background-image: linear-gradient(to right, #FF4B2B, #FF416C);
-            font-family: "Roboto", sans-serif;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
+        a{
+            color: white;
         }
     </style>
 </head>
@@ -103,49 +102,52 @@
 <div class="navbar">
     <nav>
         <ul id="MenuItems"><!--use this id in js-->
+            <li><a href="memberpage.jsp">MEMBER PAGE</a></li>
+            <li><a href="editmember.jsp">EDIT MEMBER</a></li>
+            <li><a href="addmembership.jsp">ADD MEMBERSHIP</a></li>
+            <li><a href="addmember.jsp">ADD MEMBER</a></li>
+            <li><a href="membershipview.jsp">VIEW MEMBERSHIP</a></li>
+            <li><a href="takebook.jsp">BOOKS</a></li>
             <li><a href="add.jsp">ADD BOOK</a></li>
             <li><a href="display.jsp">DISPLAY BOOK</a></li>
             <li><a href="Edit.jsp">EDIT BOOK</a></li>
-            <li><a href="memberpage.jsp">MEMBER PAGE</a></li>
-            <li><a href="editmember.jsp">EDIT PAGE</a></li>
-            <li><a href="reservebook.jsp">RESERVE BOOK</a></li>
-            <li><a href="addmembership.jsp">ADD MEMBERSHIP</a></li>
-            <li><a href="deletemember.jsp">DELETE MEMBERSHIP</a></li>
-
-
         </ul>
     </nav></div>
-<div class="dd">
+
 <div class="login-page">
     <div class="form">
         <div class="login">
             <div class="login-header">
-                <h3>Insert</h3>
-                <p>Please Enter book details</p>
+                <h3>ADD NEW MEMBER</h3>
+                <p>Please Enter Member details</p>
             </div>
         </div>
-        <form name="f2" method="post" action="Insert.jsp">
+        <form name="login" method="post" action="new.jsp">
 
-            <input type="text" name="cutid" placeholder="Title" >
-
-
-            <input type="text"  name="author" placeholder="Author" >
+            <input type="text" name="name" placeholder="Name" >
 
 
-            <input type="text" name="subject" placeholder="Subject">
-            <input type="integer" name="count"  placeholder="No of books">
+            <input type="text"  name="add" placeholder="Address" >
 
 
-            <input type="date" name="pdate" placeholder="Date">
-            <button type="Submit" name="submit1" onclick="myFunction()">Add</button>
+            <input type="text" name="phno" placeholder="Phone number">
+
+
+            <input type="email" name="mail" placeholder="Mail">
+
+            <input type="text" name="username" placeholder="Username">
+
+            <input type="text" name="pwd" placeholder="Password">
+
+            <button type="Submit" onclick="myFunction()" >Add</button>
         </form>
     </div>
 </div>
-    <script>
-        function myFunction() {
-            alert("Book added Sucessfully");
-        }
-    </script>
+<script>
+    function myFunction() {
+        alert("Successfully added");
+    }
+</script>
 </body>
 </body>
 </html>

@@ -66,6 +66,9 @@
             color: #FF416C;
             text-decoration: none;
         }
+        a{
+            color: white;
+        }
         nav ul{
             display: inline-block;
             list-style-type: none;

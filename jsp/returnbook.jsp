@@ -11,9 +11,6 @@
             width: 134px;
             margin-top: 4px;
         }
-        a{
-            color: white;
-        }
         .login-page {
             width: 360px;
             padding: 8% 0 0;
@@ -68,11 +65,20 @@
             color: #FF416C;
             text-decoration: none;
         }
+a {
+    color: white;
+}
+
+        body {
+            background-color:#FF416C;
+            background-image: linear-gradient(to right, #FF4B2B, #FF416C);
+            font-family: "Roboto", sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
         nav ul{
             display: inline-block;
             list-style-type: none;
-
-            color: #eeeeee;
         }
         nav ul li{
             display: inline-block;
@@ -87,14 +93,9 @@
         nav{
             flex: 1;
             text-align: right;
-            color: #eeeeee;
         }
-        body {
-            background-color:#FF416C;
-            background-image: linear-gradient(to right, #FF4B2B, #FF416C);
-            font-family: "Roboto", sans-serif;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
+        a{
+            color: white;
         }
     </style>
 </head>
@@ -103,49 +104,34 @@
 <div class="navbar">
     <nav>
         <ul id="MenuItems"><!--use this id in js-->
-            <li><a href="add.jsp">ADD BOOK</a></li>
-            <li><a href="display.jsp">DISPLAY BOOK</a></li>
-            <li><a href="Edit.jsp">EDIT BOOK</a></li>
-            <li><a href="memberpage.jsp">MEMBER PAGE</a></li>
-            <li><a href="editmember.jsp">EDIT PAGE</a></li>
+            <li><a href="takebook.jsp">TAKE BOOK</a></li>
+            <li><a href="returnbook.jsp">RETURN BOOK</a></li>
             <li><a href="reservebook.jsp">RESERVE BOOK</a></li>
-            <li><a href="addmembership.jsp">ADD MEMBERSHIP</a></li>
-            <li><a href="deletemember.jsp">DELETE MEMBERSHIP</a></li>
-
 
         </ul>
     </nav></div>
-<div class="dd">
+
 <div class="login-page">
     <div class="form">
         <div class="login">
             <div class="login-header">
-                <h3>Insert</h3>
+                <h3>RETURN BOOK</h3>
                 <p>Please Enter book details</p>
             </div>
         </div>
-        <form name="f2" method="post" action="Insert.jsp">
+        <form name="f2" method="post" action="returnbooks.jsp">
 
-            <input type="text" name="cutid" placeholder="Title" >
-
-
-            <input type="text"  name="author" placeholder="Author" >
-
-
-            <input type="text" name="subject" placeholder="Subject">
-            <input type="integer" name="count"  placeholder="No of books">
-
-
-            <input type="date" name="pdate" placeholder="Date">
-            <button type="Submit" name="submit1" onclick="myFunction()">Add</button>
+            <input type="text" name="name" placeholder="Title" >
+            <input type="text"  name="username" placeholder="Username" >
+            <button type="Submit" name="submit1" onclick="myFunction()" >Return</button>
         </form>
     </div>
 </div>
-    <script>
-        function myFunction() {
-            alert("Book added Sucessfully");
-        }
-    </script>
+<script>
+    function myFunction() {
+        alert("Book returned Successfully");
+    }
+</script>
 </body>
 </body>
 </html>
