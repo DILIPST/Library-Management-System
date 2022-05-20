@@ -1,7 +1,10 @@
 package com.example.librarym;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
+
 
 public class bookDAO {
     static Connection conn;
@@ -9,7 +12,7 @@ public class bookDAO {
 
     public static int insertbook(bookBean u) {
         int status = 0;
-        String sql = "insert into books(title,author,subject,pdate) values(?,?,?,?)";
+        String sql = "insert into books(title,author,subject,pdate,count) values(?,?,?,?,?)";
         try {
             conn = ConnectionProvider.getCon();
             pst = conn.prepareStatement(sql);
@@ -17,6 +20,7 @@ public class bookDAO {
             pst.setString(2, u.getAuthor());
             pst.setString(3, u.getSubject());
             pst.setString(4, u.getPdate());
+            pst.setInt(5,u.getCount());
             status = pst.executeUpdate();
 
             conn.close();
@@ -81,6 +85,7 @@ public class bookDAO {
 
         return status;
     }
+
     public static int deletebook(bookBean u) {
         int status = 0;
         String sql = "delete from books where title=?";
@@ -96,5 +101,176 @@ public class bookDAO {
         }
 
         return status;
+    }
+
+
+    public static int bookcount(String title) {
+
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        int a=0;
+        String sql = "select*from books where title='"+title+"'";
+        try {
+            conn = ConnectionProvider.getCon();
+            statement = conn.createStatement();
+            resultSet = statement.executeQuery(sql);
+            while(resultSet.next()){
+                a = resultSet.getInt("count");
+            }
+
+            conn.close();
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+        return a;
+    }
+    public static int bookreduce(String title,int a) {
+
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+
+        String sql = "update books set count = "+a+" where title='"+title+"'" ;
+        try {
+
+            conn = ConnectionProvider.getCon();
+            statement = conn.createStatement();
+            resultSet = statement.executeQuery(sql);
+            conn.close();
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+        return a;
+    }
+    public static int issuedcount(String title) {
+
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        int a=0;
+        String sql = "select*from members where username='"+title+"'";
+        try {
+            conn = ConnectionProvider.getCon();
+            statement = conn.createStatement();
+            resultSet = statement.executeQuery(sql);
+            while(resultSet.next()){
+                a = resultSet.getInt("count");
+            }
+
+            conn.close();
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+        return a;
+    }
+    public static int addcount(String title,int a) {
+
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        String sql = "update members set count = "+a+" where username='"+title+"'" ;
+        try {
+
+            conn = ConnectionProvider.getCon();
+            statement = conn.createStatement();
+            resultSet = statement.executeQuery(sql);
+            conn.close();
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+        return a;
+    }
+
+    public static int deletecount(String title,int a) {
+
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        String sql = "update members set count = "+a+" where username='"+title+"'" ;
+        try {
+
+            conn = ConnectionProvider.getCon();
+            statement = conn.createStatement();
+            resultSet = statement.executeQuery(sql);
+            conn.close();
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+        return a;
+    }
+    public static int deleteissuedbooks(String name,String username) {
+        int status = 0;
+        String sql = "delete from issuedbooks where username=? and bookname=?";
+        try {
+            conn = ConnectionProvider.getCon();
+            pst = conn.prepareStatement(sql);
+            pst.setString(1, username);
+            pst.setString(2,name);
+            status = pst.executeUpdate();
+
+            conn.close();
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+
+        return status;
+    }
+    public static int addbookcount(String title,int a) {
+
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        String sql = "update books set count = "+a+" where title='"+title+"'" ;
+        try {
+
+            conn = ConnectionProvider.getCon();
+            statement = conn.createStatement();
+            resultSet = statement.executeQuery(sql);
+            conn.close();
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+        return a;
+    }
+    public static String  reservedbooks(String username) {
+        int status = 0;
+        String name = null;
+        try {
+            name = null;
+            conn = ConnectionProvider.getCon();
+            PreparedStatement pst = conn.prepareStatement("Select bookname from reservedbooks where username=?");
+            pst.setString(1, username);
+            ResultSet rs = pst.executeQuery();
+
+            while (rs.next()) {
+                name = rs.getString("bookname");
+            }
+            conn.close();
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+
+        return name;
+    }
+    public static String  availbooks(String bookname) {
+        int status = 0;
+        String name = null;
+        try {
+            name = null;
+            conn = ConnectionProvider.getCon();
+            PreparedStatement pst = conn.prepareStatement("Select title from books where title=? and count between 1 and 5");
+            pst.setString(1, bookname);
+            ResultSet rs = pst.executeQuery();
+
+            while (rs.next()) {
+                name = rs.getString("title");
+            }
+            conn.close();
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+
+        return name;
     }
 }
