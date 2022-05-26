@@ -15,8 +15,13 @@
         ResultSet rs = pst.executeQuery();
 
         if(rs.next()) {
-            out.println("Valid login credentials");
-            response.sendRedirect("memberhome.jsp");
+            {%>
+            <script>
+           alert("Logged in Successfully");
+            window.location.href="memberhome.jsp";
+            </script>
+           <%
+        }
         }
         else {
             out.println("Invalid login credentials");

@@ -1,6 +1,7 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="static java.lang.System.out" %>
 <%@ page import="java.sql.*" %>
+<%@ page import="com.example.librarym.bookDAO" %>
 <%
     String id = request.getParameter("userid");
     String driver = "org.postgresql.Driver";
@@ -37,16 +38,6 @@
         .login-page .form .login{
             margin-top: -31px;
             margin-bottom: 26px;
-        }
-        .form {
-            position: relative;
-            z-index: 1;
-            background: #FFFFFF;
-            max-width: 3000px;
-            margin:  0px;
-            padding: 45px;
-            text-align: center;
-            box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
         }
         table
         {
@@ -85,7 +76,8 @@
             box-sizing: border-box;
             font-size: 14px;
         }
-        .form button {
+
+         button {
             font-family: "Roboto", sans-serif;
             text-transform: uppercase;
             outline: 0;
@@ -148,6 +140,7 @@
             <li><a href="takebook.jsp">TAKE BOOK</a></li>
             <li><a href="returnbook.jsp">RETURN BOOK</a></li>
             <li><a href="reservebook.jsp">RESERVE BOOK</a></li>
+            <li><a href="Login.jsp"><button type="button"  class="delete">LOGOUT</button></a></li>
 
         </ul>
     </nav></div>
@@ -198,20 +191,9 @@
             e.printStackTrace();
         }
         String  status= String.valueOf(session.getAttribute("Status"));
-
+        String username = String.valueOf(session.getAttribute("Name"));
+        int issuedcount = bookDAO.issuedcount(username);
     %>
-    <script>
-       function myFunction()
-        {
-            var status =<%=status%>;
-            if (status != 0)
-                status = "Taken book Successfully";
-            else {
-                status = "Your limit is Over";
-            }
-            alert(status);
-        }
-    </script>
 
 </table>
 </div>

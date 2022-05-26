@@ -147,11 +147,6 @@
         </form>
     </div>
 </div>
-<script>
-    function myFunction() {
-        alert("Data Updated");
-    }
-</script>
 </body>
 </body>
 </html>

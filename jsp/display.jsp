@@ -102,6 +102,12 @@
 <div class="navbar">
     <nav>
         <ul id="MenuItems"><!--use this id in js-->
+            <li><a href="memberpage.jsp">MEMBER PAGE</a></li>
+            <li><a href="editmember.jsp">EDIT MEMBER</a></li>
+            <li><a href="addmembership.jsp">ADD MEMBERSHIP</a></li>
+            <li><a href="addmember.jsp">ADD MEMBER</a></li>
+            <li><a href="membershipview.jsp">VIEW MEMBERSHIP</a></li>
+            <li><a href="takebook.jsp">BOOKS</a></li>
             <li><a href="add.jsp">ADD BOOK</a></li>
             <li><a href="display.jsp">DISPLAY BOOK</a></li>
             <li><a href="Edit.jsp">EDIT BOOK</a></li>

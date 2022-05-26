@@ -52,12 +52,15 @@
 
         <div class="navbar">
             <nav>
-                <ul id="MenuItems"><!--use this id in js-->
-                    <li><a href="customer.jsp">CREATE DATA</a></li>
-                    <li><a href="update.jsp">UPDATE DATA</a></li>
-                    <li><a href="delete.jsp">DELETE DATA</a></li>
-                    <li><a href="Read.jsp">READ DATABASE</a></li>
-                    <li><a href="rs.jsp">READ SINGLE DATA</a></li>
+                <ul id="MenuItems"><!--use this id in js--><li><a href="memberpage.jsp">MEMBER PAGE</a></li>
+                    <li><a href="editmember.jsp">EDIT MEMBER</a></li>
+                    <li><a href="addmembership.jsp">ADD MEMBERSHIP</a></li>
+                    <li><a href="addmember.jsp">ADD MEMBER</a></li>
+                    <li><a href="membershipview.jsp">VIEW MEMBERSHIP</a></li>
+                    <li><a href="takebook.jsp">BOOKS</a></li>
+                    <li><a href="add.jsp">ADD BOOK</a></li>
+                    <li><a href="display.jsp">DISPLAY BOOK</a></li>
+                    <li><a href="Edit.jsp">EDIT BOOK</a></li>
                 </ul>
             </nav></div>
         <jsp:useBean id="obj" class="com.example.librarym.bookBean"/>

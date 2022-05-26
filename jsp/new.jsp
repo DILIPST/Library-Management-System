@@ -4,17 +4,24 @@
 <jsp:useBean id="obj" class="com.example.librarym.memberBEAN"/>
 <jsp:setProperty property="*" name="obj" />
 <h3>
-    haiiii;
 </h3>
 <%
     int status= memberDAO.insertmember(obj);
     String message;
     if(status>0) {
-        message = "Inserted successfully";
+        { %>
+        <script>
+         alert("DATA ADDED SUCCESSFULLY");
+         window.location.href="signup.jsp";
+          </script>
+        <%}
     }
-    else{
-        message = "Insertion failed";
-    }
-    out.print(message);
-    response.sendRedirect("signup.jsp");
+            if(status==0) {
+                { %>
+                 <script>
+                 alert("DATA  NOT ADDED");
+                 window.location.href="signup.jsp";
+                 </script>
+                 <%}
+}
 %>

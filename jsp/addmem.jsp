@@ -5,11 +5,22 @@
     int status= memberDAO.insertmembership(obj);
     String message;
     if(status>0) {
-        message = "Inserted successfully";
-        response.sendRedirect("addmembership.jsp");
+        %>
+<script>
+    alert(" Membership Added Successfully");
+    window.location.href="addmembership.jsp"
+</script>
+<%
+
     }
     else{
-        message = "Insertion failed";
+        %>
+<script>
+    alert("Not added");
+    window.location.href="addmembership.jsp"
+</script>
+<%
+
     }
-    out.print(message);
+
 %>

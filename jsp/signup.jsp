@@ -105,8 +105,8 @@
     <div class="form">
         <div class="login">
             <div class="login-header">
-                <h3>ADD NEW MEMBER</h3>
-                <p>Please Enter Member details</p>
+                <h3>Sign UP</h3>
+                <p>Please Enter Your  details</p>
             </div>
         </div>
         <form name="login" method="post" action="new.jsp">
@@ -130,11 +130,6 @@
         </form>
     </div>
 </div>
-    <script>
-        function myFunction() {
-            alert("Signed Up successfully");
-        }
-    </script>
-</body>
+    </body>
 </body>
 </html>

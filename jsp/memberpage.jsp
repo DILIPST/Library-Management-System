@@ -102,6 +102,7 @@
             <li><a href="add.jsp">ADD BOOK</a></li>
             <li><a href="display.jsp">DISPLAY BOOK</a></li>
             <li><a href="Edit.jsp">EDIT BOOK</a></li>
+            <li><a href="accept.jsp">REQUESTS</a></li>
         </ul>
     </nav>
 </div>

@@ -74,7 +74,7 @@
             box-sizing: border-box;
             font-size: 14px;
         }
-        .form button {
+        button {
             font-family: "Roboto", sans-serif;
             text-transform: uppercase;
             outline: 0;
@@ -137,6 +137,7 @@
             <li><a href="takebook.jsp">TAKE BOOK</a></li>
             <li><a href="returnbook.jsp">RETURN BOOK</a></li>
             <li><a href="reservebook.jsp">RESERVE BOOK</a></li>
+            <li><a href="Login.jsp"><button type="button"  class="delete">LOGOUT</button></a></li>
 
         </ul>
     </nav></div>
@@ -148,9 +149,8 @@
     <table border="1">
         <tr>
             <th>Title</th>
-            <th> Author Name</th>
-            <th>Subject</th>
-            <th>Publication Date</th>
+            <th> Upto Date</th>
+            <th>Reserve date</th>
             <th>Reserve</th>
         </tr>
         <jsp:useBean id="obj" class="com.example.librarym.bookBean"/>
@@ -160,7 +160,7 @@
             String au=obj.getAuthor();
             String su= obj.getSubject();
             String date=obj.getPdate();
-            String sql="select*from books where count=0";
+            String sql="select*from issuedbooks ";
 
             try{
                 connection = DriverManager.getConnection(connectionUrl, userid, password);
@@ -171,11 +171,10 @@
                 while(resultSet.next()){
         %>
         <tr>
-            <td><%=resultSet.getString("title") %></td>
-            <td><%=resultSet.getString("author") %></td>
-            <td><%=resultSet.getString("subject") %></td>
-            <td><%=resultSet.getString("pdate") %></td>
-            <td><a href="conformr.jsp?id=<%=resultSet.getString("title")%>"><button type="button"  >Reserve</button></a></td>
+            <td><%=resultSet.getString("bookname") %></td>
+            <td><%=resultSet.getString("untildate") %></td>
+            <td><input type="date" min=<%=resultSet.getString("untildate") %>></td>
+            <td><a href="conformr.jsp?id=<%=resultSet.getString("bookname")%>&date1=<%=resultSet.getString("untildate")%>"><button type="button">Reserve</button></a></td>
         </tr>
         <%
                 }

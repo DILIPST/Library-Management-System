@@ -14,17 +14,22 @@
     int status= memberDAO.updatemember(obj);
     String message;
     if(status>0) {
-        message = "Updated successfully";
+        %>
+            <script>
+                alert("Data Updated Successfully");
+                window.location.href="editmember.jsp"
+            </script>
+            <%
 
     }
-    else if(status==-1)
-        {
-            message="No Updation is done";
-        }
-    else{
-        message = "No such Student id to Update.";
-    }
-    out.print(message);
+                if(status==0) {
+            %>
+            <script>
+                alert("Data is not updated");
+                window.location.href="editmember.jsp"
+            </script>
+            <%
+                }
 %>
 </body>
 </html>

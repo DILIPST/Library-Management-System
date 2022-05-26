@@ -2,7 +2,8 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="static java.lang.System.out" %>
 <%@ page import="java.sql.*" %>
-<%@ page import="com.example.librarym.ConnectionProvider" %>
+        <%@ page import=" java.time.LocalDate"%>
+        <%@ page import="com.example.librarym.ConnectionProvider" %>
 <%
   String id = request.getParameter("userid");
   String driver = "org.postgresql.Driver";
@@ -23,17 +24,6 @@
 <html>
   <head>
     <title>Title</title>
-    <script>
-
-      var status =<%=status%>;
-      if (status != 0)
-        status = "Taken book Successfully";
-      else {
-        status = "Your limit is Over";
-      }
-      alert(status);
-
-    </script>
   </head>
   <body>
   <%
@@ -43,40 +33,71 @@
     int a = 0, b = 0;
     int count = 0;
     count = bookDAO.bookcount(name);
-
+System.out.println("The count before"+count);
     int issuedcount = bookDAO.issuedcount(username);
-    if (issuedcount > 5) {
-      issuedcount = 5;
+    if (issuedcount > 2) {
+      issuedcount = 2;
     }
     status = 0;
-    if (count > 0) {
-      if (issuedcount < 5) {
+    int s=bookDAO.memberornot(username);
+    LocalDate myObj = LocalDate.now();
+    LocalDate date2;
+    if(s!=0)
+    {
 
-        String sql = "insert into issuedbooks(bookname,username) values(?,?)";
+       date2 = myObj.plusDays(5);
+    }
+    else {
+       date2 = myObj.plusDays(3);
+    }
+    System.out.println(myObj);  // Display the current date
+    if (count > 0) {
+      if (issuedcount < 2) {
+        String sql = "insert into issuedbooks(bookname,username,issueddate,untildate) values(?,?,?,?)";
         a = bookDAO.bookreduce(name, --count);
         b = bookDAO.addcount(username, ++issuedcount);
-        out.print("The returned value is=" + b);
+        System.out.println("The returned value is=" + count);
         status = 0;
         try {
           connection = DriverManager.getConnection(connectionUrl, userid, password);
           PreparedStatement pst = connection.prepareStatement(sql);
           pst.setString(1, name);
           pst.setString(2, username);
+          pst.setObject(3,myObj);
+          pst.setObject(4,date2);
           status = pst.executeUpdate();
           connection.close();
+          if(status>0)
+          {
+            %>
+            <script>
+              alert("Book has been Taken Successfully");
+              window.location.href="takebook.jsp";
+            </script>
+            <%
+          }
 
         } catch (Exception ex) {
           System.out.println(ex);
         }
 
       } else {
-        out.print("your limit is over");
+             %>
+  <script>
+    alert("Your limit is over");
+    window.location.href="takebook.jsp";
+  </script>
+  <%
       }
     } else {
-      out.print("Cannot take book");
+         %>
+  <script>
+    alert("Cannot take book");
+    window.location.href="takebook.jsp";
+  </script>
+  <%
     }
-    session.setAttribute("Status", status);
   %>
   </body>
-  <% response.sendRedirect("takebook.jsp");%>
+
 </html>

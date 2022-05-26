@@ -1,8 +1,12 @@
-<%@ page import="com.example.librarym.bookDAO" %>
+        <%@ page import="com.example.librarym.bookDAO" %>
+<%@ page import="com.example.librarym.memberDAO" %>
+
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.time.LocalDate" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
-<%String un=String.valueOf(session.getAttribute("Name"));
+<%String un = String.valueOf(session.getAttribute("Name"));
 %>
 <head>
     <title>Library Management System</title>
@@ -48,15 +52,13 @@
             position: relative;
             z-index: 1;
             background-color: lightsalmon;
-            max-width: 100px;
-            margin:  10px;
-            padding: 80px;
+            border: 1px solid black;
+            margin:  0px;
             text-align: center;
             box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
             font-family: "Roboto", sans-serif;
             outline: 0;
-            width: 75%;
-            border: 10px;
+            width: 1000px;
             box-sizing: border-box;
             font-size: 14px;
         }
@@ -79,21 +81,119 @@
 </div>
 <div class="mm">
 
-
     <%
-        String namer=String.valueOf(session.getAttribute("Name"));
-        out.print(namer);
-        String  a= bookDAO.reservedbooks(namer);
-        if(a!=null)
-        {
-            String book=bookDAO.availbooks(a);
-            if(book!=null)
-            {
-                out.print(book+" !! This book is available for You to take");
-            }
+        String namer = String.valueOf(session.getAttribute("Name"));
+        ArrayList<Object> userormember = new ArrayList<Object>();
+        userormember = memberDAO.userormember(namer);
+         int notification=memberDAO.notification(namer);
+         String notifi=memberDAO.notifications(namer);
+         System.out.println(notifi);
+         if(notification>0){
+             if(notifi.equals("yes"))
+             {
+                 %>
+    <script>
+        alert("You have been Promoted to MEMBER");
+    </script>
+        <%
+             }
+             if(notifi.equals("no"))
+             {
+                 %>
+    <script>
+        alert("You have been Demoted to USER");
+    </script>
+    <%
+    }
+         }
+        LocalDate myObj = LocalDate.now();
+        String user = String.valueOf(userormember.get(0));
+        LocalDate membership = null;
+       %> <table>
+    <%
+        if (user.equals("yes")) {
+            membership = LocalDate.parse(String.valueOf(userormember.get(1)));
+    %>
+    <tr>
+
+        <th> Status: MEMBER</th>
+        <th> Expires on: <%=membership%><br></th>
+    </tr>
+    <%
+        }
+        else{
+    %>
+    <tr>
+        <th> Status:USER</th>
+    </tr>
+    <%
         }
     %>
+    </table>
+<%
+    if (user.equals("yes")) {
+
+        if(myObj.compareTo(membership)==0)
+        {
+    %>
+    <table>
+        <tr>
+            <th><h2>Your Membership has been expired</h2></th>
+            <th><a href="request.jsp"><button type="button"  class="delete">Renew Membership</button></a></th>
+        </tr>
+
+    </table>
+    <%
+        }
+        }
+    %>
+
+    <%
+
+        String a = bookDAO.reservedbooks(namer);
+        if (a != null) {
+            String book = bookDAO.availbooks(a);
+            if (book != null) {
+                out.print(book + " !! This book is available for You to take");
+            }
+        }
+        ArrayList<Object> takenbooks = new ArrayList<Object>();
+        takenbooks = bookDAO.takenbooks(namer);
+    %>
+    <table>
+        <tr>
+        <%
+            for (int i = 0; i < takenbooks.size(); ++i) {
+                Object o = takenbooks.get(i);
+                if (i % 2 == 0) {
+        %>
+
+                    <td>Book:<%=o%></td>
+                  <%
+                          }
+
+                      }
+                  %>
+        </tr>
+        <tr>
+            <%
+                for (int i = 0; i < takenbooks.size(); ++i) {
+                    Object o = takenbooks.get(i);
+                    if (i % 2 != 0) {
+            %>
+
+            <td>Return on:<%=o%></td>
+            <%
+                    }
+
+                }
+            %>
+        </tr>
+    </table>
     </div>
 <img src="Images/home2.jpg">
 </body>
 </html>
+
+
+

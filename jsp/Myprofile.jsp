@@ -5,7 +5,9 @@
     <title>My Profile</title>
     <style>
  body{
-     background-color: white;
+     background-color: #FF416C;
+     background-image: linear-gradient(to left, limegreen, whitesmoke);
+
  }
  nav ul{
      display: inline-block;
@@ -29,7 +31,7 @@
      color:#FF4B2B ;
  }
         button{
-            background-color: #FF416C;
+            background-color: lawngreen;
             color: white;
             height: 30px;
             border-radius: 4px;
@@ -74,7 +76,7 @@
         label{
             border: none;
             background-color: #FF416C;
-            background-image: linear-gradient(to right, #FF4B2B, #FF416C);
+            background-image: linear-gradient(to right, limegreen, lightgreen);
             width: 920px;
             padding: 10px 40px;
             display: inline-block;
@@ -164,9 +166,10 @@
         <label>Username:<m><%=resultSet.getString("username") %></m></label>
         <label>Password:<m><%=resultSet.getString("pwd") %></m></label>
             <div class="edit">
-        <label>Edit:<m><a href="editmember.jsp?id=<%=resultSet.getString("name")%>"><button type="button"  class="delete">Edit</button></a></m></label>
-            <label><m><a href="Login.jsp"><button type="button"  class="delete">Sign Out</button></a></m></label>
-
+                <label> Status:<m><%=resultSet.getString("mem")%></m></label>
+        <label><m><a href="editmember.jsp?id=<%=resultSet.getString("name")%>"><button type="button"  class="delete">Edit</button></a></m></label>
+                <label><m><a href="Login.jsp"><button type="button"  class="delete" onclick="myFunction()">Sign Out</button></a></m></label>
+                <label><m><a href="request.jsp"><button type="button"  class="delete">Request to become a member</button></a></m></label>
         </div>
         </div>
                 <%
@@ -177,6 +180,13 @@
             }
         %>
     </table>
+    <script>
+        function myFunction()
+        {
+            alert("Signed Out from the account");
+        }
+
+    </script>
 </div>
 </body>
 </html>

@@ -1,4 +1,24 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="static java.lang.System.out" %>
+<%@ page import="java.sql.*" %>
+<%
+    String id = request.getParameter("userid");
+    String driver = "org.postgresql.Driver";
+    String connectionUrl = "jdbc:postgresql://localhost:5432/postgres";
+    String database = "postgres";
+    String userid = "postgres";
+    String password = "srec@123";
+    try {
+        Class.forName(driver);
+    } catch (ClassNotFoundException e) {
+        e.printStackTrace();
+    }
+    Connection connection = null;
+    Statement statement = null;
+    ResultSet resultSet = null;
+%>
 <html>
 <head>
     <title>Deletion </title>
@@ -31,6 +51,17 @@
             box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
         }
         .form input {
+            font-family: "Roboto", sans-serif;
+            outline: 0;
+            background: #f2f2f2;
+            width: 100%;
+            border: 0;
+            margin: 0 0 15px;
+            padding: 15px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+        .form select {
             font-family: "Roboto", sans-serif;
             outline: 0;
             background: #f2f2f2;
@@ -105,11 +136,13 @@
             <li><a href="memberpage.jsp">MEMBER PAGE</a></li>
             <li><a href="editmember.jsp">EDIT MEMBER</a></li>
             <li><a href="addmembership.jsp">ADD MEMBERSHIP</a></li>
+            <li><a href="addmember.jsp">ADD MEMBER</a></li>
             <li><a href="membershipview.jsp">VIEW MEMBERSHIP</a></li>
             <li><a href="takebook.jsp">BOOKS</a></li>
             <li><a href="add.jsp">ADD BOOK</a></li>
             <li><a href="display.jsp">DISPLAY BOOK</a></li>
             <li><a href="Edit.jsp">EDIT BOOK</a></li>
+            <li><a href="accept.jsp">REQUESTS</a></li>
         </ul>
     </nav>
 </div>
@@ -123,17 +156,41 @@
             </div>
         </div>
         <form name="f2" method="post" action="addmem.jsp">
-            <input type="text" name="username" placeholder="username" >
-            <input type="text"  name="date" placeholder="Validtill" >
-            <button type="Submit" name="submit1"  onclick="myFunction()" >Add</button>
+            <jsp:useBean id="obj" class="com.example.librarym.bookBean"/>
+            <jsp:setProperty property="*" name="obj" />
+            <%
+                String username=String.valueOf(session.getAttribute("Name"));
+                String sql="select username from members where mem='no'";
+                try{
+                    int i=1;
+                    connection = DriverManager.getConnection(connectionUrl, userid, password);
+                    statement=connection.createStatement();
+                    resultSet = statement.executeQuery(sql);
+            %>
+
+            <select name="username" id="username">
+                <%
+                    while(resultSet.next()){
+                        String book=resultSet.getString("username");
+                %>
+                <option value="<%=book %>"><%=book %></option>
+                <%
+                    }
+                %>
+            </select>
+            </p>
+            <%
+
+                    connection.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            %>
+            <input type="date"  name="date" placeholder="Validtill" >
+            <button type="Submit" name="submit1"   >Add</button>
         </form>
     </div>
 </div>
-<script>
-    function myFunction() {
-        alert("Membership Added");
-    }
-</script>
 </body>
 </body>
 </html>

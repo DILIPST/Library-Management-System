@@ -95,64 +95,40 @@
         </ul>
     </nav>
 </div>
-        <div class="dd">
-            <h1>Details of the Membership Holders</h1>
-            <table border="1">
-                <tr>
-                    <th>Name</th>
-                    <th>Date</th>
-                    <th>Membership</th>
+<div class="dd">
+    <h1>Details of the Membership Holders</h1>
+    <table border="1">
+        <tr>
+            <th>Name</th>
+            <th>Status</th>
+            <th>Accept Request</th>
+            <th>Cancel Request</th>
 
-                </tr>
-                <%
-                    try{
-                        connection = DriverManager.getConnection(connectionUrl, userid, password);
-                        statement=connection.createStatement();
-                        String sql ="select * from members where mem='yes'";
-                        resultSet = statement.executeQuery(sql);
-                        while(resultSet.next()){
-                %>
-                <tr>
-                    <td><%=resultSet.getString("username") %></td>
-                    <td><%=resultSet.getString("validtill") %></td>
-                    <td><a href="demote.jsp?id=<%=resultSet.getString("username")%>"><button type="button" onclick="myFunction()" >Demote</button></a></td>
+        </tr>
+        <%
+            try{
+                connection = DriverManager.getConnection(connectionUrl, userid, password);
+                statement=connection.createStatement();
+                String sql ="select * from requests";
+                resultSet = statement.executeQuery(sql);
+                while(resultSet.next()){
+        %>
+        <tr>
+            <td><%=resultSet.getString("namer") %></td>
+            <td><%=resultSet.getString("accepted") %></td>
+            <td><a href="promote.jsp?id=<%=resultSet.getString("namer")%>&date1=<%=resultSet.getString("accepted")%>"><button type="button">Accept</button></a></td>
+            <td><a href="demote.jsp?id=<%=resultSet.getString("namer")%>&date1=<%=resultSet.getString("accepted")%>"><button type="button">Cancel</button></a></td>
 
-                </tr>
-                <%
-                }
-                        %>
-            </table>
-            <br>
-            <br>
-            <h2> Details of the Users in the Library</h2>
-            <br>
-            <br>
-            <br>
-            <table border="1">
-                <tr>
-                    <th>Name</th>
-                    <th>Membership</th>
+        </tr>
+        <%
+            }
 
-                </tr>
-                <%
-                            statement2=connection.createStatement();
-                            String sql2="Select*from members where mem='no'";
-                             rs1=statement2.executeQuery(sql2);
-                            while(rs1.next())
-                            {%>
-                <tr>
-                    <td><%=rs1.getString("username") %></td>
-                    <td><a href="promote.jsp?id=<%=rs1.getString("username")%>"><button type="button" >Promote</button></a></td>
-
-                </tr>
-                                <%
-                            }
-                        connection.close();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                %>
-            </table>
-        </div>
+                connection.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        %>
+    </table>
+</div>
 </body>
 </html>
